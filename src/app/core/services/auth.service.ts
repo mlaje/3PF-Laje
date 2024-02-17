@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { User } from '../../layouts/dashboard/pages/users/models/user';
 import { Router } from '@angular/router';
 import { AlertsService } from './alerts.service';
-import { delay, of, map, finalize } from 'rxjs';
+import { delay, of, map, finalize, tap } from 'rxjs';
 import { LoadingService } from './loading.service';
 
 interface LoginData {
@@ -10,11 +10,21 @@ interface LoginData {
   password: null | string;
 }
 
+const MOCK_USER = {
+  id: 2323,
+  userName: 'kimo',
+  firstName: 'Satoshi',
+  lastName: 'Nakamoto',
+  email: 'satoshi@gmail.com',
+  password: 'bitcoin',
+  role: 'ADMIN',
+};
+
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
 
+export class AuthService {
   authUser: User | null = null;
   
   constructor(private router: Router, 
@@ -22,22 +32,13 @@ export class AuthService {
               private loadingService: LoadingService) {}
 
   login(data: LoginData) : void {
-      const MOCK_USER = {
-          id: 2323,
-          userName: 'kimo',
-          firstName: 'Satoshi',
-          lastName: 'Nakamoto',
-          email: 'satoshi@gmail.com',
-          password: 'bitcoin',
-          role: 'ADMIN',
-      };
-
-      if (data.email === MOCK_USER.email && data.password === MOCK_USER.password) {
-          this.authUser = MOCK_USER;
-          localStorage.setItem('token', 'token123'); 
-          this.router.navigate(['dashboard']);
+      if (data.email    === MOCK_USER.email && 
+          data.password === MOCK_USER.password) {
+            this.setAuthUser(MOCK_USER);
+            localStorage.setItem('token', 'token123');        // TOKEN siempre igual
+            this.router.navigate(['dashboard']);
       } else {
-          this.alertsService.showError('Email o password inválidos');
+            this.alertsService.showError('Email o password inválidos');
       }
   };   
 
@@ -51,7 +52,15 @@ export class AuthService {
     this.loadingService.setIsLoading(true);
     return of(localStorage.getItem('token'))
            .pipe(delay(1000), 
-                 map((response) => !!response ), finalize(() => this.loadingService.setIsLoading(false)));           
+                 map((response) => !!response ), 
+                 tap(()         => this.setAuthUser(MOCK_USER)),
+                 finalize(()    => this.loadingService.setIsLoading(false)));           
+  }
+
+  private setAuthUser(mockUser: User): void {
+    this.authUser = mockUser;
+    //this.store.dispatch(AuthActions.setAuthUser({ user }));
+    localStorage.setItem('token', 'token123'); 
   }
 
 }

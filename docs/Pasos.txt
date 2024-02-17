@@ -652,3 +652,34 @@ Tercera entrega
 
 - Guardar la sesion del usuario que hizo login
 
+- npm install json-server -g
+
+- json-server --version
+
+- crear db.json
+
+- mover los datos de los servicios al db.json
+
+- importar el HttpClientModule al app.module
+    Reemplazar las llamadas para que usen la API
+
+- crear carpeta environments y dos archivos de environment y editar el angular.json
+
+    "configurations": {
+                "production": {
+                "fileReplacements": [
+                    {
+                    "replace": "src/environments/environment.ts",
+                    "with": "src/environments/environment.prod.ts"
+                    }
+
+- "defaultConfiguration": "production"
+
+- ng build vs ng build -c development
+
+falta agregar llamadas a las API en cursos y students y probar ante errores del server
+
+
+
+
+

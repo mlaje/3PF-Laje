@@ -38,6 +38,7 @@ getPageData(): void {
     complete: () => {
       this.loadingService.setIsLoading(false);
     },
+    
   });
 }
 

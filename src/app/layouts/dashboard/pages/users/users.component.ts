@@ -40,6 +40,7 @@ export class UsersComponent implements OnInit {
       complete: () => {
         this.loadingService.setIsLoading(false);
       },
+      
     });
   }
 

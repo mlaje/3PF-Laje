@@ -1,8 +1,10 @@
 import { Inject, Injectable } from '@angular/core';
 import { User } from '../../layouts/dashboard/pages/users/models/user';
-import { Observable, delay, finalize, of, tap } from 'rxjs';
+import { Observable, catchError, delay, finalize, mergeMap, of, tap } from 'rxjs';
 import { AlertsService } from './alerts.service';
 import { LoadingService } from './loading.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 const ROLES_DB: string[] = ['ADMIN', 'USER'];
 
@@ -50,10 +52,13 @@ let USERS_DB: User[] = [
 })
 export class UsersService {
 
-  constructor(private alerts: AlertsService, private loadingService: LoadingService) {}
+  constructor(private alerts: AlertsService, 
+              private loadingService: LoadingService,
+              private httpClient: HttpClient) {}
   
   getUserById(idUser: number | string): Observable<User | undefined> {
-    return of(USERS_DB.find((user) => user.id == idUser)).pipe(delay(500));
+    return this.httpClient.get<User>(`${environment.apiURL}/users/${idUser}`);
+   // return of(USERS_DB.find((user) => user.id == idUser)).pipe(delay(500));
   }
 
 
@@ -65,28 +70,59 @@ export class UsersService {
   }
 
   getUsers() {
-    
+
+    //let headers = new HttpHeaders();
+    //headers = headers.append('X-token', localStorage.getItem('token') || '');
+
+    this.loadingService.setIsLoading(true);
+    //return this.httpClient.get<User[]>(`${environment.apiURL}/users`, {headers: headers})
+    return this.httpClient.get<User[]>(`${environment.apiURL}/users`)
+                          .pipe(
+                            catchError((error) => {
+                              this.alerts.showError('Error al cargar los usuarios');
+                              //finalize(() => this.loadingService.setIsLoading(false));
+                              return of([]);                              
+                            }))
+                          .pipe(delay(1200), finalize(() => this.loadingService.setIsLoading(false)));
+
+    /*
     this.loadingService.setIsLoading(true);
     return of(USERS_DB).pipe(
       delay(1200), 
-      finalize(() => this.loadingService.setIsLoading(false)));
+      finalize(() => this.loadingService.setIsLoading(false))); */
   }
 
 		
   createUser(payload: User) {
-    USERS_DB = [...USERS_DB, {...payload, id : new Date().getTime()}]; 
-    return this.getUsers();      
+    return this.httpClient
+        .post<User>(`${environment.apiURL}/users`, payload)
+        .pipe(mergeMap(() => this.getUsers()));
+
+
+    //USERS_DB = [...USERS_DB, {...payload, id : new Date().getTime()}]; 
+    //return this.getUsers();      
   }
 
   deleteUserById(userId: number) {
-    USERS_DB = USERS_DB.filter((user) => user.id != userId);
-    return this.getUsers().pipe(tap(() => this.alerts.showSuccess('Realizado', 'Se eliminó correctamente')) );
+    return this.httpClient
+          .delete<User>(`${environment.apiURL}/users/${userId}`)
+          .pipe(mergeMap(() => this.getUsers()));
+
+   // USERS_DB = USERS_DB.filter((user) => user.id != userId);
+   // return this.getUsers().pipe(tap(() => this.alerts.showSuccess('Realizado', 'Se eliminó correctamente')) );
   }
 	
   updateUserById(userId: number, data: User) {
-    USERS_DB = USERS_DB.map((c) => c.id === userId ? { ...c, ...data} : c); 
-    return this.getUsers();
-
+    return this.httpClient
+          .patch<User>(`${environment.apiURL}/users/${userId}`,data)
+          .pipe(
+            catchError((error) => {
+              this.alerts.showError('Error al actualizar el usuario');             
+              return of([]);
+            }))
+          .pipe(mergeMap(() => this.getUsers()));
+    //USERS_DB = USERS_DB.map((c) => c.id === userId ? { ...c, ...data} : c); 
+    //return this.getUsers();
   }
 
 }

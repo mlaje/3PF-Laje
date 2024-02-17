@@ -40,6 +40,7 @@ export class StudentsComponent {
       complete: () => {
         this.loadingService.setIsLoading(false);
       },
+     
     });
   }
 

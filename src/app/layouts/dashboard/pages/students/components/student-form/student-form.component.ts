@@ -80,6 +80,7 @@ export class StudentFormComponent implements OnInit {
       complete: () => {
       //  this.loadingService.setIsLoading(false);
       },
+      
     });
   }
 

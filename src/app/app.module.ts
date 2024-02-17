@@ -13,6 +13,7 @@ import { SharedModule } from './shared/shared.module';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatNativeDateModule } from '@angular/material/core';
+import { HttpClientModule } from '@angular/common/http';
 
 registerLocaleData(es);
 registerLocaleData(esAR);
@@ -28,7 +29,8 @@ registerLocaleData(esAR);
     //DashboardModule,
     //SharedModule,
     MatProgressSpinnerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    HttpClientModule
     
   ],
   providers: [
