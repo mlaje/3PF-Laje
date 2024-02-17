@@ -635,3 +635,20 @@ Mudar los datos de los componentes a los servicios e implementar lazy loading
 Refactorings varios
 
 Separar el formulario de carga de la tabla de cada entidad modelada (User, Student, Course)
+
+
+Tercera entrega
+- crear auth-routing.module.ts
+
+- llenar login.component.scss
+
+- ng generate pipe shared/validation-errors --skip-tests
+
+- ng generate guard core/guards/auth
+
+- ng generate service core/services/auth --skip-tests  
+
+- ng generate guard core/guards/admin --skip-tests  
+
+- Guardar la sesion del usuario que hizo login
+

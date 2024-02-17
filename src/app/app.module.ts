@@ -25,8 +25,8 @@ registerLocaleData(esAR);
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    DashboardModule,
-    SharedModule,
+    //DashboardModule,
+    //SharedModule,
     MatProgressSpinnerModule,
     MatNativeDateModule
     

@@ -1,13 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './layouts/auth/pages/login/login.component';
+
 import { DashboardComponent } from './layouts/dashboard/dashboard.component';
 import { HomeComponent } from './layouts/dashboard/pages/home/home.component';
 import { NotFoundComponent } from './layouts/not-found/not-found.component';
+import { authGuard } from './core/guards/auth.guard';
+import { adminGuard } from './core/guards/admin.guard';
 
 const routes: Routes = [
   {
     path: 'dashboard',   
+    canActivate: [authGuard],
     component: DashboardComponent,
     children: [ 
       {
@@ -18,6 +21,7 @@ const routes: Routes = [
       {
         // /dashboard/users
         path: 'users',
+        canActivate: [adminGuard],
         loadChildren: () => 
                       import('./layouts/dashboard/pages/users/users.module').then(
                             (m) => m.UsersModule)   // LAZY LOADING
@@ -49,9 +53,16 @@ const routes: Routes = [
     path: '404',
     component: NotFoundComponent,
   },
-  {
+ /* {
     path: 'auth/login',
     component: LoginComponent,
+  }
+  */
+  {
+    path: 'auth',
+    loadChildren: () => 
+    import('./layouts/auth/auth.module').then(
+          (m) => m.AuthModule)   // LAZY LOADING
   },
   {
     path: '**',
