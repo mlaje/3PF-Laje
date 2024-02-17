@@ -1,8 +1,10 @@
 import { Inject, Injectable } from '@angular/core';
 import { Student } from '../../layouts/dashboard/pages/students/models/index';
-import { Observable, delay, finalize, of, tap } from 'rxjs';
+import { Observable, catchError, delay, finalize, mergeMap, of, tap } from 'rxjs';
 import { AlertsService } from './alerts.service';
 import { LoadingService } from './loading.service';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 //const ROLES_DB: string[] = ['ADMIN', 'USER'];
 
@@ -37,7 +39,7 @@ const companyIndustries: string[] = ['Agencia de Publicidad', 'Agricultura', 'Al
 // Puesto Laboral
 const jobDescriptions: string[] = ['Analista', 'Asistente', 'Asociado', 'Coordinador', 'Director', 'Director Ejecutivo (CEO)', 'Empleado de Nivel Básico', 'Especialista', 'Gerente', 'Jefe de Equipo', 'Presidente', 'Socio', 'Supervisor'];
 
-
+/*
 let STUDENTS_DB: Student[] = [
 {
   id: new Date().getTime()+1,
@@ -88,6 +90,7 @@ let STUDENTS_DB: Student[] = [
   jobDescription: 'Socio'
 }  
 ];
+*/
 
 @Injectable({
   providedIn: 'root'
@@ -95,17 +98,34 @@ let STUDENTS_DB: Student[] = [
 export class StudentsService {
 
   constructor(private alerts: AlertsService,
-              private loadingService: LoadingService) {}
+              private loadingService: LoadingService,
+              private httpClient: HttpClient) {}
   
   getStudentById(idStudent: number | string): Observable<Student | undefined> {
-    return of(STUDENTS_DB.find((student) => student.id == idStudent)).pipe(delay(500));
+    //return of(STUDENTS_DB.find((student) => student.id == idStudent)).pipe(delay(500));
+    return this.httpClient.get<Student>(`${environment.apiURL}/students/${idStudent}`);
   }
 
   getStudents() {
+    /*
     this.loadingService.setIsLoading(true);
     return of(STUDENTS_DB).pipe(
       delay(1200), 
       finalize(() => this.loadingService.setIsLoading(false)));
+    */
+
+    this.loadingService.setIsLoading(true);
+    return this.httpClient.get<Student[]>(`${environment.apiURL}/students`)
+                          .pipe(
+                              catchError((error) => {
+                                  this.alerts.showError('Error al cargar los estudiantes');
+                                  //finalize(() => this.loadingService.setIsLoading(false));
+                                  return of([]);                              
+                              }))
+                          .pipe(delay(1200), 
+                                finalize(() => this.loadingService.setIsLoading(false)));  
+
+
   }
 
   getStudentsGenders() {
@@ -134,18 +154,39 @@ export class StudentsService {
   }
 
   createStudent(payload: Student) {
+    /*
     STUDENTS_DB = [...STUDENTS_DB, {...payload, id : new Date().getTime()}]; 
-    return this.getStudents();      
+    return this.getStudents();    
+    */
+
+    return this.httpClient
+        .post<Student>(`${environment.apiURL}/students`, payload)
+        .pipe(mergeMap(() => this.getStudents()));
+  
   }
 
   deleteStudentById(studentId: number) {
-    STUDENTS_DB = STUDENTS_DB.filter((student) => student.id != studentId);
+    /*STUDENTS_DB = STUDENTS_DB.filter((student) => student.id != studentId);
     return this.getStudents().pipe(tap(() => this.alerts.showSuccess('Realizado', 'Se eliminó correctamente')) );
+    */
+    return this.httpClient
+          .delete<Student>(`${environment.apiURL}/students/${studentId}`)
+          .pipe(mergeMap(() => this.getStudents()));
   }
 	
   updateStudentById(studentId: number, data: Student) {
+    /*
     STUDENTS_DB = STUDENTS_DB.map((c) => c.id === studentId ? { ...c, ...data} : c); 
     return this.getStudents();
+    */
+    return this.httpClient
+    .patch<Student>(`${environment.apiURL}/students/${studentId}`,data)
+    .pipe(
+      catchError((error) => {
+        this.alerts.showError('Error al actualizar el estudiante');             
+        return of([]);
+      }))
+    .pipe(mergeMap(() => this.getStudents()));
   }
 
 

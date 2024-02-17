@@ -8,6 +8,7 @@ import { environment } from '../../../environments/environment';
 
 const ROLES_DB: string[] = ['ADMIN', 'USER'];
 
+/*
 let USERS_DB: User[] = [
     {
       id: new Date().getTime() +1 ,
@@ -46,6 +47,7 @@ let USERS_DB: User[] = [
       role: 'USER'    
     }   
   ];
+*/
 
 @Injectable({
   providedIn: 'root'
@@ -68,9 +70,20 @@ export class UsersService {
       delay(800), 
       finalize(() => this.loadingService.setIsLoading(false)));
   }
+    /*
+    return this.httpClient.get<string[]>(`${environment.apiURL}/roles`)
+                          .pipe(
+                              catchError((error) => {
+                                  this.alerts.showError('Error al cargar los usuarios');
+                                  //finalize(() => this.loadingService.setIsLoading(false));
+                                  return of([]);                              
+                                }))
+                          .pipe(delay(800), 
+                                finalize(() => this.loadingService.setIsLoading(false)));
+  */
+
 
   getUsers() {
-
     //let headers = new HttpHeaders();
     //headers = headers.append('X-token', localStorage.getItem('token') || '');
 
@@ -78,12 +91,13 @@ export class UsersService {
     //return this.httpClient.get<User[]>(`${environment.apiURL}/users`, {headers: headers})
     return this.httpClient.get<User[]>(`${environment.apiURL}/users`)
                           .pipe(
-                            catchError((error) => {
-                              this.alerts.showError('Error al cargar los usuarios');
-                              //finalize(() => this.loadingService.setIsLoading(false));
-                              return of([]);                              
-                            }))
-                          .pipe(delay(1200), finalize(() => this.loadingService.setIsLoading(false)));
+                              catchError((error) => {
+                                  this.alerts.showError('Error al cargar los usuarios');
+                                  //finalize(() => this.loadingService.setIsLoading(false));
+                                  return of([]);                              
+                              }))
+                          .pipe(delay(1200), 
+                                finalize(() => this.loadingService.setIsLoading(false)));
 
     /*
     this.loadingService.setIsLoading(true);

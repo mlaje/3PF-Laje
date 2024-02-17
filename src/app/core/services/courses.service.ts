@@ -1,8 +1,10 @@
 import { Inject, Injectable } from '@angular/core';
 import { Course } from '../../layouts/dashboard/pages/courses/models/course';
-import { Observable, delay, finalize, of, tap } from 'rxjs';
+import { Observable, catchError, delay, finalize, mergeMap, of, tap } from 'rxjs';
 import { AlertsService } from './alerts.service';
 import { LoadingService } from './loading.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 // categorias de cursos
 const categorias: string[] = ['Inglés', 'Inteligencia Artificial', 'Herramientas Digitales',
@@ -18,7 +20,7 @@ const niveles: string[] = ['Principiante', 'Intermedio', 'Avanzado', 'Experto'];
   // dedicación que demanda
 const dedicaciones: string[] = ['Baja', 'Moderada', 'Alta']; 
 
-  
+  /* Mudado al db.json
 let COURSES_DB: Course[] = [
   {
     id: new Date().getTime()+1,
@@ -69,6 +71,7 @@ let COURSES_DB: Course[] = [
     profesor: 'Sofía Loren'
   }
 ];
+*/
 
 @Injectable({
   providedIn: 'root'
@@ -76,10 +79,12 @@ let COURSES_DB: Course[] = [
 export class CoursesService {
 
   constructor(private alerts: AlertsService,
-              private loadingService: LoadingService) {}
+              private loadingService: LoadingService,
+              private httpClient: HttpClient) {}
   
   getCourseById(idCourse: number | string): Observable<Course | undefined> {
-    return of(COURSES_DB.find((course) => course.id == idCourse)).pipe(delay(100));
+      return this.httpClient.get<Course>(`${environment.apiURL}/courses/${idCourse}`);
+      //return of(COURSES_DB.find((course) => course.id == idCourse)).pipe(delay(100));
   }
 
   getCourseCategories() {
@@ -111,26 +116,62 @@ export class CoursesService {
   }
 
   getCourses() {
+    /*
     this.loadingService.setIsLoading(true);
     return of(COURSES_DB).pipe(
       delay(1500), 
       finalize(() => this.loadingService.setIsLoading(false)));
+      */
+
+      this.loadingService.setIsLoading(true);
+      return this.httpClient.get<Course[]>(`${environment.apiURL}/courses`)
+                            .pipe(
+                                catchError((error) => {
+                                    this.alerts.showError('Error al cargar los cursos');
+                                    //finalize(() => this.loadingService.setIsLoading(false));
+                                    return of([]);                              
+                                }))
+                            .pipe(delay(1200), 
+                                  finalize(() => this.loadingService.setIsLoading(false)));   
+
   }
 
   createCourse(payload: Course) {
     //COURSES_DB.push(payload);
-    COURSES_DB = [...COURSES_DB, {...payload, id : new Date().getTime()}]; 
-    return this.getCourses();      
+    
+    //COURSES_DB = [...COURSES_DB, {...payload, id : new Date().getTime()}]; 
+    //return this.getCourses();    
+    
+    return this.httpClient
+    .post<Course>(`${environment.apiURL}/courses`, payload)
+    .pipe(mergeMap(() => this.getCourses()));
+
   }
 
   deleteCourseById(courseID: number) {
-    COURSES_DB = COURSES_DB.filter((course) => course.id != courseID);
-    return this.getCourses().pipe(tap(() => this.alerts.showSuccess('Realizado', 'Se eliminó correctamente')) ) ;
+    //COURSES_DB = COURSES_DB.filter((course) => course.id != courseID);
+    //return this.getCourses().pipe(tap(() => this.alerts.showSuccess('Realizado', 'Se eliminó correctamente')) ) ;
+
+    return this.httpClient
+          .delete<Course>(`${environment.apiURL}/courses/${courseID}`)
+          .pipe(mergeMap(() => this.getCourses()));
+
+
   }
 	
   updateProductById(courseId: number, data: Course) {
-    COURSES_DB = COURSES_DB.map((c) => c.id === courseId ? { ...c, ...data} : c); 
-    return this.getCourses();
+    //COURSES_DB = COURSES_DB.map((c) => c.id === courseId ? { ...c, ...data} : c); 
+    //return this.getCourses();
+
+    return this.httpClient
+    .patch<Course>(`${environment.apiURL}/courses/${courseId}`,data)
+    .pipe(
+      catchError((error) => {
+        this.alerts.showError('Error al actualizar el curso');             
+        return of([]);
+      }))
+    .pipe(mergeMap(() => this.getCourses()));
+
 
   }
 }

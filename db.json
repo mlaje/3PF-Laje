@@ -144,24 +144,6 @@
       "email": "aaaa@gmail.com",
       "password": "flkajsffasd",
       "role": "USER"
-    },
-    {
-      "id": "da34",
-      "firstName": "aaaaaaaa",
-      "lastName": "eeeee",
-      "userName": "ffffff",
-      "email": "a@gmail.com",
-      "password": "aaaa",
-      "role": "USER"
-    },
-    {
-      "id": "c925",
-      "firstName": "aaaa",
-      "lastName": "aaa",
-      "userName": "aasfasfd",
-      "email": "ggggg@gmail.com",
-      "password": "hhhhhh",
-      "role": "ADMIN"
     }
   ]
 }
