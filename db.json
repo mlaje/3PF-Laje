@@ -144,6 +144,15 @@
       "email": "aaaa@gmail.com",
       "password": "flkajsffasd",
       "role": "USER"
+    },
+    {
+      "id": "4b3c",
+      "firstName": "aasasf",
+      "lastName": "asfdasdf",
+      "userName": "asdf",
+      "email": "aaa@gmail.com",
+      "password": "3332332",
+      "role": "USER"
     }
   ]
 }

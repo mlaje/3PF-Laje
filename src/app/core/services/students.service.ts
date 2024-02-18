@@ -171,6 +171,7 @@ export class StudentsService {
     */
     return this.httpClient
           .delete<Student>(`${environment.apiURL}/students/${studentId}`)
+          .pipe(tap(() => this.alerts.showSuccess('Realizado', 'Se eliminó correctamente')))
           .pipe(mergeMap(() => this.getStudents()));
   }
 	

@@ -6,6 +6,7 @@ import { LoadingService } from './loading.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 
+
 // categorias de cursos
 const categorias: string[] = ['Inglés', 'Inteligencia Artificial', 'Herramientas Digitales',
                         'Negocios', 'Habilidades blandas', 'Diseño UX/UI',
@@ -154,9 +155,9 @@ export class CoursesService {
 
     return this.httpClient
           .delete<Course>(`${environment.apiURL}/courses/${courseID}`)
-          .pipe(mergeMap(() => this.getCourses()));
-
-
+          .pipe(tap(() => this.alerts.showSuccess('Realizado', 'Se eliminó correctamente')) )
+          .pipe(mergeMap(() => this.getCourses()))        
+          
   }
 	
   updateProductById(courseId: number, data: Course) {

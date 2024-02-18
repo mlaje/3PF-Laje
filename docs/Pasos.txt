@@ -677,9 +677,12 @@ Tercera entrega
 
 - ng build vs ng build -c development
 
-falta agregar llamadas a las API en cursos y students y probar ante errores del server
-falta ocultar passwords
+- agregar llamadas a las API en cursos y students 
+    Luego de editar el db.json hacer:
+    - json-server db.json --watch
 
+Falta probar ante errores del server
+Falta ocultar passwords
 
 
 

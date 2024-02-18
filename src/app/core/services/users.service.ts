@@ -6,8 +6,8 @@ import { LoadingService } from './loading.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 
-const ROLES_DB: string[] = ['ADMIN', 'USER'];
 
+const ROLES_DB: string[] = ['ADMIN', 'USER'];
 /*
 let USERS_DB: User[] = [
     {
@@ -62,14 +62,20 @@ export class UsersService {
     return this.httpClient.get<User>(`${environment.apiURL}/users/${idUser}`);
    // return of(USERS_DB.find((user) => user.id == idUser)).pipe(delay(500));
   }
-
-
+   
   getRoles(): Observable<string[]> {
     this.loadingService.setIsLoading(true);
     return of(ROLES_DB).pipe(
       delay(800), 
       finalize(() => this.loadingService.setIsLoading(false)));
-  }
+      /*
+          this.loadingService.setIsLoading(true);
+          return of(ROLES_DB).pipe(
+            delay(800), 
+            finalize(() => this.loadingService.setIsLoading(false)));
+        }
+        */
+    }
     /*
     return this.httpClient.get<string[]>(`${environment.apiURL}/roles`)
                           .pipe(
@@ -80,8 +86,7 @@ export class UsersService {
                                 }))
                           .pipe(delay(800), 
                                 finalize(() => this.loadingService.setIsLoading(false)));
-  */
-
+    */
 
   getUsers() {
     //let headers = new HttpHeaders();
@@ -98,21 +103,17 @@ export class UsersService {
                               }))
                           .pipe(delay(1200), 
                                 finalize(() => this.loadingService.setIsLoading(false)));
-
     /*
     this.loadingService.setIsLoading(true);
     return of(USERS_DB).pipe(
       delay(1200), 
       finalize(() => this.loadingService.setIsLoading(false))); */
   }
-
 		
   createUser(payload: User) {
     return this.httpClient
         .post<User>(`${environment.apiURL}/users`, payload)
         .pipe(mergeMap(() => this.getUsers()));
-
-
     //USERS_DB = [...USERS_DB, {...payload, id : new Date().getTime()}]; 
     //return this.getUsers();      
   }
@@ -120,8 +121,8 @@ export class UsersService {
   deleteUserById(userId: number) {
     return this.httpClient
           .delete<User>(`${environment.apiURL}/users/${userId}`)
+          .pipe(tap(() => this.alerts.showSuccess('Realizado', 'Se eliminó correctamente')) )
           .pipe(mergeMap(() => this.getUsers()));
-
    // USERS_DB = USERS_DB.filter((user) => user.id != userId);
    // return this.getUsers().pipe(tap(() => this.alerts.showSuccess('Realizado', 'Se eliminó correctamente')) );
   }
