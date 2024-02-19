@@ -109,14 +109,33 @@ export class UsersService {
       delay(1200), 
       finalize(() => this.loadingService.setIsLoading(false))); */
   }
+
+  
+  generateString(length: number) {
+    const characters =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+  }
 		
+
   createUser(payload: User) {
     return this.httpClient
-        .post<User>(`${environment.apiURL}/users`, payload)
-        .pipe(mergeMap(() => this.getUsers()));
-    //USERS_DB = [...USERS_DB, {...payload, id : new Date().getTime()}]; 
-    //return this.getUsers();      
+      .post<User>(`${environment.apiURL}/users`, {
+        ...payload,
+        token: this.generateString(16),
+      })
+      .pipe(mergeMap(() => this.getUsers()));
+      //USERS_DB = [...USERS_DB, {...payload, id : new Date().getTime()}]; 
+      //return this.getUsers();      
+ 
   }
+
+
 
   deleteUserById(userId: number) {
     return this.httpClient

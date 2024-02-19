@@ -117,7 +117,7 @@
       "lastName": "Ivanchuk",
       "email": "satoshi@gmail.com",
       "password": "bitcoin",
-      "role": "USER",
+      "role": "ADMIN",
       "token": "AFDASFDASDFS9798"
     },
     {
@@ -139,26 +139,6 @@
       "password": "nikita",
       "role": "USER",
       "token": "6566161688844"
-    },
-    {
-      "id": "2053",
-      "firstName": "Marce",
-      "lastName": "Bona",
-      "userName": "asfasdf",
-      "email": "aaaa@gmail.com",
-      "password": "flkajsffasd",
-      "role": "USER",
-      "token": "8648646486"
-    },
-    {
-      "id": "4b3c",
-      "firstName": "aasasf",
-      "lastName": "asfdasdf",
-      "userName": "asdf",
-      "email": "aaa@gmail.com",
-      "password": "3332332",
-      "role": "USER",
-      "token": "012345"
     }
   ]
 }
