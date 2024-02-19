@@ -10,7 +10,10 @@
           mat-list-item
           >Inicio</a
         >
-        <a
+
+        <!-- lo que está comentado también funciona y no permitiría ver el item de Usuarios 
+        <a *ngIf="rolActual =='ADMIN'" -->
+        <a 
           #usersLink="routerLinkActive"
           routerLinkActive
           [activated]="usersLink.isActive"

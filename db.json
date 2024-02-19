@@ -107,16 +107,18 @@
       "lastName": "Cuenca",
       "email": "pepe.cuenca@gmail.com",
       "password": "bombazo",
-      "role": "USER"
+      "role": "USER",
+      "token": "1234567890"
     },
     {
       "id": "2",
       "userName": "chucky",
       "firstName": "Vassily",
       "lastName": "Ivanchuk",
-      "email": "vassily.ivanchuk@gmail.com",
-      "password": "marzo",
-      "role": "ADMIN"
+      "email": "satoshi@gmail.com",
+      "password": "bitcoin",
+      "role": "USER",
+      "token": "AFDASFDASDFS9798"
     },
     {
       "id": "3",
@@ -125,7 +127,8 @@
       "lastName": "Laje",
       "email": "marcelo.laje@gmail.com",
       "password": "flancito",
-      "role": "ADMIN"
+      "role": "ADMIN",
+      "token": "66554455223399"
     },
     {
       "id": "4",
@@ -134,7 +137,8 @@
       "lastName": "Laje",
       "email": "valentina.laje@gmail.com",
       "password": "nikita",
-      "role": "USER"
+      "role": "USER",
+      "token": "6566161688844"
     },
     {
       "id": "2053",
@@ -143,7 +147,8 @@
       "userName": "asfasdf",
       "email": "aaaa@gmail.com",
       "password": "flkajsffasd",
-      "role": "USER"
+      "role": "USER",
+      "token": "8648646486"
     },
     {
       "id": "4b3c",
@@ -152,7 +157,8 @@
       "userName": "asdf",
       "email": "aaa@gmail.com",
       "password": "3332332",
-      "role": "USER"
+      "role": "USER",
+      "token": "012345"
     }
   ]
 }
