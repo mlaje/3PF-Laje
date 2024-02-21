@@ -660,6 +660,9 @@ Tercera entrega
 
 - mover los datos de los servicios al db.json
 
+
+
+
 - importar el HttpClientModule al app.module
     Reemplazar las llamadas para que usen la API
 
@@ -681,6 +684,11 @@ Tercera entrega
     Luego de editar el db.json hacer:
     - json-server db.json --watch
 
+    Endpoints generados:
+    http://localhost:3000/courses
+    http://localhost:3000/students
+    http://localhost:3000/users
+
 - Servidor de prueba: ng test (corre los tests)
 
 - crear tests
@@ -688,29 +696,6 @@ Tercera entrega
 - usar ng mock
     npm install ng-mocks --save-dev 
 
+- Crear courses.service.spec.ts y definir el unit testing del servicio de cursos
 
-Falta probar ante errores del server
-Falta ocultar passwords
-probar que muestra cuando no se levantan los endpoints (json-server db.json --watch)
-
-
-Lazy Loading y Rutas child.
-Guards y Autenticación de usuarios.
-API Rest.
-Unit Testing: Test unitarios de componentes y servicios.
-
-
-Generar un proyecto Angular que contemple la administración de alumnos, clases y cursos, utilizando Angular Material. Ten en cuenta los aspectos técnicos y aspectos funcionales claves para que tu proyecto cumpla con los objetivos. Puedes ayudarte con la Rúbrica de la Tercera Entrega del Proyecto Final.
-
-
-Objetivos generales
-
-Optimizar tu proyecto frontend basado en Angular, integrando lo trabajado en clases hasta el momento y respetando los aspectos técnicos y funcionales esenciales.
-Objetivos específicos
-
-Usar correctamente los métodos de la API.
-Generar, al menos, un archivo de test que testee un servicio y otro que testee un componente.
-Crear rutas para la aplicación.
-
-
-
+- Crear courses.component.spec.ts y definir el unit testing del servicio de cursos

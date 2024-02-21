@@ -1,3 +1,5 @@
+/* CODIGO HECHO EN CLASE, NO SE INCLUYE PERO SE DEJA COMENTADO
+
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import { AuthService } from './auth.service';
@@ -56,3 +58,4 @@ describe('Pruebas de AuthService', () => {
   });
 });
 
+*/

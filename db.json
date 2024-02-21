@@ -155,16 +155,6 @@
       "password": "nikita",
       "role": "USER",
       "token": "6566161688844"
-    },
-    {
-      "id": "d5fc",
-      "firstName": "asfasdf",
-      "lastName": "asdfas",
-      "userName": "asdf",
-      "email": "satoshiasdf@gmail.com",
-      "password": "bitcoin",
-      "role": "ADMIN",
-      "token": "7TBeC7tiG4BME0us"
     }
   ]
 }

@@ -61,8 +61,8 @@ const routes: Routes = [
   {
     path: 'auth',
     loadChildren: () => 
-    import('./layouts/auth/auth.module').then(
-          (m) => m.AuthModule)   // LAZY LOADING
+                  import('./layouts/auth/auth.module').then(
+                        (m) => m.AuthModule)   // LAZY LOADING
   },
   {
     path: '**',
