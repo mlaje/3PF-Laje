@@ -64,7 +64,7 @@ onEdit(course: Course) {
     next: (result) =>  {
         if (result) {
           this.coursesService
-            .updateProductById(course.id, result)
+            .updateCourseById(course.id, result)
             .subscribe({
               next: (courses) => (this.dataSource = courses)
             });
@@ -87,7 +87,7 @@ onDeleteCourse(ev: Course): void {
   }
 }
 
-
+/*
 onCourseSubmitted(ev: Course): void {
   
   this.loadingService.setIsLoading(true);
@@ -102,5 +102,5 @@ onCourseSubmitted(ev: Course): void {
     },
   });
 }
-
+*/
 }

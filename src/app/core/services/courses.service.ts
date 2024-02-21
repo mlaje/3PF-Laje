@@ -158,7 +158,7 @@ export class CoursesService {
           
   }
 	
-  updateProductById(courseId: number, data: Course) {
+  updateCourseById(courseId: number, data: Course) {
     //COURSES_DB = COURSES_DB.map((c) => c.id === courseId ? { ...c, ...data} : c); 
     //return this.getCourses();
 

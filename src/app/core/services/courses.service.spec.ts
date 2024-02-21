@@ -7,7 +7,7 @@ import { environment } from '../../../environments/environment';
 import { AlertsService } from './alerts.service';
 import { LoadingService } from './loading.service';
 
-describe('Pruebas de CoursesService', () => {
+describe('Test Unitario de CoursesService', () => {
 
     let coursesService: CoursesService;
     let httpController: HttpTestingController;
@@ -127,6 +127,7 @@ describe('Pruebas de CoursesService', () => {
   
     }));
 
+    // El test más importante
     it('createCourse agrega un curso a la lista de Cursos', fakeAsync(() => {
       const mockPayload: Course = {
         "id": 0,

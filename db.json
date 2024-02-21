@@ -8,7 +8,7 @@
       "nivel": "Avanzado",
       "dedicacion": "Moderada",
       "precioDeLista": 90000,
-      "descuento": 20,
+      "descuento": 22,
       "precioFinal": 74000,
       "detalles": "Se requieren conocimientos de HTML, CSS y Javascript",
       "rangoDeFechas": "Del 08/09 al 02/11",
@@ -47,6 +47,22 @@
       "dias": "Lunes y Jueves",
       "horario": "20:30 a 22:30 hs",
       "profesor": "Sofía Loren"
+    },
+    {
+      "id": "365a",
+      "nombre": "Computación Grafica",
+      "carrera": "Diseño UX/UI",
+      "categoria": "Diseño UX/UI",
+      "nivel": "Avanzado",
+      "dedicacion": "Alta",
+      "precioDeLista": 3333333,
+      "descuento": 33,
+      "precioFinal": 3333000,
+      "detalles": "detalles",
+      "rangoDeFechas": "02/08 al 11/09",
+      "dias": "Lu y Mi",
+      "horario": "200 hs - 22 hs",
+      "profesor": "Claudio"
     }
   ],
   "students": [
@@ -100,7 +116,6 @@
     }
   ],
   "users": [
-   
     {
       "id": "1",
       "userName": "cremita",
