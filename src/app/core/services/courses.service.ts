@@ -7,6 +7,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 
 
+
+
 // categorias de cursos
 const categorias: string[] = ['Inglés', 'Inteligencia Artificial', 'Herramientas Digitales',
                         'Negocios', 'Habilidades blandas', 'Diseño UX/UI',
@@ -123,7 +125,6 @@ export class CoursesService {
       delay(1500), 
       finalize(() => this.loadingService.setIsLoading(false)));
       */
-
       this.loadingService.setIsLoading(true);
       return this.httpClient.get<Course[]>(`${environment.apiURL}/courses`)
                             .pipe(
@@ -134,19 +135,16 @@ export class CoursesService {
                                 }))
                             .pipe(delay(1200), 
                                   finalize(() => this.loadingService.setIsLoading(false)));   
-
   }
 
   createCourse(payload: Course) {
     //COURSES_DB.push(payload);
-    
     //COURSES_DB = [...COURSES_DB, {...payload, id : new Date().getTime()}]; 
     //return this.getCourses();    
     
     return this.httpClient
-    .post<Course>(`${environment.apiURL}/courses`, payload)
-    .pipe(mergeMap(() => this.getCourses()));
-
+               .post<Course>(`${environment.apiURL}/courses`, payload)
+               .pipe(mergeMap(() => this.getCourses()));
   }
 
   deleteCourseById(courseID: number) {

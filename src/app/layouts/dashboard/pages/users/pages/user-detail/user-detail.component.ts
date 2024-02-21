@@ -16,7 +16,7 @@ export class UserDetailComponent {
       this.loadingService.setIsLoading(true);          
       this.usersService.getUserById(this.route.snapshot.params['idUser']).subscribe ({
         next:  (findedUser) => { 
-          console.log(findedUser)
+          //console.log(findedUser)
         },
         complete: () => {
           this.loadingService.setIsLoading(false); 

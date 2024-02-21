@@ -33,7 +33,8 @@
                             Password
                         </mat-label>
                     
-                        <input formControlName="password" matInput [type]="revealPassword ? 'text' : 'password'"/>
+                        <input formControlName="password" matInput [type]="revealPassword ? 'text' : 'password'"/> 
+                        <!--<input formControlName="password" matInput type="password"/> -->
                         
                         <mat-error>
                             {{ loginForm.get("password")?.errors | validationErrors  }}
@@ -43,9 +44,16 @@
                             (click)="revealPassword = !revealPassword"
                             matSuffix
                             mat-icon-button>
+                        </button>
+
+                        <!--
+                        <button
+                            (click)="revealPassword = !revealPassword"
+                            matSuffix
+                            mat-icon-button>
                             <mat-icon>visibility</mat-icon>
                         </button>
-                    
+                        -->
                     </mat-form-field>
                 </div>
                 
